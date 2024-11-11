@@ -5,6 +5,14 @@ import axios from "axios"
 import { Camera, Check, Upload, X } from "lucide-react"
 import QrScanner from "qr-scanner"
 
+interface QRScanner {
+  start: () => void;
+  stop: () => void;
+}
+
+// const qrScannerRef = useRef<QRScanner | null>(null);
+
+
 export default function QRCodeUploadForm() {
   const [images, setImages] = useState([null, null, null])
   const [predictions, setPredictions] = useState([])
@@ -13,7 +21,7 @@ export default function QRCodeUploadForm() {
   const [showQRScanner, setShowQRScanner] = useState(false)
   const [qrCodeData, setQRCodeData] = useState("")
   const [hasValidQRCode, setHasValidQRCode] = useState(false)
-  const qrScannerRef = useRef<any>(null)
+  const qrScannerRef = useRef<QRScanner | null>(null);
   const videoRef = useRef(null)
 
   const resetForm = () => {
@@ -23,28 +31,32 @@ export default function QRCodeUploadForm() {
     setShowResults(false)
   }
 
-  const handleQRScan = (result) => {
+  interface QRScanResult {
+    data: string;
+  }
+  
+  const handleQRScan = (result: QRScanResult) => {
     if (result) {
       if (result.data.startsWith("HS")) {
-        console.log("Valid QR code found:", result.data)
-        setQRCodeData(result.data)
-        setHasValidQRCode(true)
-        setShowQRScanner(false)
-        resetForm()
+        console.log("Valid QR code found:", result.data);
+        setQRCodeData(result.data);
+        setHasValidQRCode(true);
+        setShowQRScanner(false);
+        resetForm();
       } else {
-        console.log("Invalid QR Code. Must start with 'HS'. Continuing to scan...")
+        console.log("Invalid QR Code. Must start with 'HS'. Continuing to scan...");
       }
     }
-  }
-
-  const handleQRError = (error) => {
-    console.error("QR Code Error:", error)
+  };
+  
+  const handleQRError = (error: any) => {
+    console.error("QR Code Error:", error);
     if (error.name !== "NotFoundException") {
-      console.log("Unexpected error. Restarting scanner...")
-      restartScanner()
+      console.log("Unexpected error. Restarting scanner...");
+      restartScanner();
     }
-  }
-
+  };
+  
   const restartScanner = () => {
     if (qrScannerRef.current) {
       qrScannerRef.current.stop()
