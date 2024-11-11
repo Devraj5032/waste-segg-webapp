@@ -13,7 +13,7 @@ export default function QRCodeUploadForm() {
   const [showQRScanner, setShowQRScanner] = useState(false)
   const [qrCodeData, setQRCodeData] = useState("")
   const [hasValidQRCode, setHasValidQRCode] = useState(false)
-  const qrScannerRef = useRef(null)
+  const qrScannerRef = useRef<any>(null)
   const videoRef = useRef(null)
 
   const resetForm = () => {
