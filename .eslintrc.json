@@ -7,5 +7,6 @@
   "plugins": ["@typescript-eslint"],
   "rules": {
     // Your custom rules here
+    "@typescript-eslint/no-unused-vars": "off"
   }
 }
