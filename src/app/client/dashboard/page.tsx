@@ -38,8 +38,8 @@ export default function QRCodeUploadForm() {
   const handleQRScan = (result: QRScanResult) => {
     if (result) {
       if (result.data.startsWith("HS")) {
-        console.log("Valid QR code found:", result.data);
-        setQRCodeData(result.data);
+        console.log("Valid QR code found:", result.data.split(' ')[0]);
+        setQRCodeData(result.data.split('-')[0]);
         setHasValidQRCode(true);
         setShowQRScanner(false);
         resetForm();
