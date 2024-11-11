@@ -8,5 +8,8 @@
   "rules": {
     // Your custom rules here
     "@typescript-eslint/no-unused-vars": "off"
+  },
+  "compilerOptions": {
+    "noImplicitAny": false
   }
 }
